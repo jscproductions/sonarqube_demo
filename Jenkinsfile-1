@@ -1,5 +1,8 @@
 pipeline {
   agent { label 'droplet' }
+  environment {
+        JAVA_HOME = '/usr/lib/jvm/java-1.17.0-openjdk-amd64'
+    }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
@@ -7,7 +10,7 @@ pipeline {
     stage('Scan') {
       steps {
         withSonarQubeEnv(installationName: 'sonarqubedroplet') { 
-          sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:sonar:sonar'
+          sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar'
         }
       }
     }
